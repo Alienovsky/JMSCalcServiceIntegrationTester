@@ -21,7 +21,35 @@ class TestAdd extends Specification {
         when:
         messageSender.send("2,2,*");
         then:
-        messageConsumer.result == new Float(2 * 2);
+        this.sleep(1000);
+        messageConsumer.getResult() == new Float(2 * 2);
+    }
+
+    @Test
+    public "test test4"() {
+        when:
+        messageSender.send("2,2,/");
+        then:
+        this.sleep(1000);
+        messageConsumer.getResult() == new Float(2 / 2);
+    }
+
+    @Test
+    public "test test3"() {
+        when:
+        messageSender.send("2,2,+");
+        then:
+        this.sleep(1000);
+        messageConsumer.getResult() == new Float(2 + 2);
+    }
+
+    @Test
+    public "test test2"() {
+        when:
+        messageSender.send("2,2,-");
+        then:
+        this.sleep(1000);
+        messageConsumer.getResult() == new Float(2 - 2);
     }
 
     @Test
@@ -29,13 +57,14 @@ class TestAdd extends Specification {
     public "test test when"() {
         given:
         messageSender.send(x + "," + y + ",*");
+        this.sleep(1000);
         expect:
         messageConsumer.result == result;
         where:
         x  | y  | result
         2  | 2  | 4.0
         3  | 3  | 9.0
-        4  | 4  | 4.0
+        4  | 4  | 16.0
         5  | 5  | 25.0
         -3 | -2 | 6.0
     }

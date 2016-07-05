@@ -10,22 +10,18 @@ public class MessageConsumer implements MessageListener {
         return Float.parseFloat(result);
     }
 
+    private void setResult(String result){
+        System.out.println("Setting result with value: "+result);
+        this.result=result;
+    }
+
     private String result;
 
     public void onMessage(final Message message) {
         if(message instanceof TextMessage){
             final TextMessage textMessage = (TextMessage) message;
             try {
-                System.out.println("Result is: " + textMessage.getText());
-                result = textMessage.getText();
-            } catch (JMSException e) {
-                e.printStackTrace();
-            }
-        }
-        if (message instanceof MapMessage) {
-            final MapMessage mapMessage = (MapMessage) message;
-            try {
-                System.out.println(mapMessage.getMapNames());
+                setResult(textMessage.getText());
             } catch (JMSException e) {
                 e.printStackTrace();
             }
